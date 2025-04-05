@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - [Numele Afacerii]</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 700px;
+            margin: 50px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .contact-info p {
+            font-size: 18px;
+            color: #555;
+            margin: 8px 0;
+        }
+        form input, form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        form button {
+            padding: 12px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        form button:hover {
+            background-color: #218838;
+        }
+        .success-message {
+            display: none;
+            margin-top: 20px;
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Contactează-ne</h1>
+        <p>Trimite-ne un mesaj și te contactăm în cel mai scurt timp.</p>
+
+        <div class="contact-info">
+            <p><strong>Nume Afacere:</strong> [Numele Afacerii]</p>
+            <p><strong>Telefon:</strong> 0712 345 678</p>
+            <p><strong>Email:</strong> contact@afacerea-ta.ro</p>
+            <p><strong>Program:</strong> Luni - Vineri: 09:00 - 17:00</p>
+        </div>
+
+        <div class="contact-form">
+            <h2>Trimite un mesaj</h2>
+            <form id="contactForm" action="https://formspree.io/f/xdkewbpe" method="POST">
+                <label for="nume">Nume:</label>
+                <input type="text" id="nume" name="nume" required>
+
+                <label for="telefon">Număr de telefon:</label>
+                <input type="tel" id="telefon" name="telefon" required>
+
+                <label for="mesaj">Mesaj:</label>
+                <textarea id="mesaj" name="mesaj" rows="5" required></textarea>
+
+                <button type="submit">Trimite</button>
+                <p class="success-message" id="successMessage">Mesaj trimis cu succes! Îți mulțumim!</p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Afișează mesajul de confirmare fără reload
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const form = e.target;
+            fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    form.reset();
+                    document.getElementById('successMessage').style.display = 'block';
+                } else {
+                    alert("Ceva n-a mers bine. Încearcă din nou.");
+                }
+            }).catch(error => {
+                alert("Eroare la trimitere. Verifică conexiunea.");
+            });
+        });
+    </script>
+</body>
+</html>
